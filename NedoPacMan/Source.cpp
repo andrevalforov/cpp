@@ -1,4 +1,5 @@
 #include "Headers.h"
+#include "variables.h"
 
 using namespace std;
 char tmp_map[18][32];
@@ -34,55 +35,12 @@ void ShowMap()
 void gotoXY(short x, short y)
 {
 	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD position = { x, y }; //структура з полями Х і У
+	COORD position = { x, y }; //СЃС‚СЂСѓРєС‚СѓСЂР° Р· РїРѕР»СЏРјРё РҐ С– РЈ
 
 	SetConsoleCursorPosition(hStdout, position);
 }
 
-class entity { //об*єкт
-public:
-	entity(int x, int y) {
-		this->x = x; //вказує на адресу створеного об*єкта
-		this->y = y;
-	}
 
-	void move_x(int p) {
-		if (map[y][x + p] == ' ') x += p;
-	}
-
-	void move_y(int p) {
-		if (map[y + p][x] == ' ') y += p;
-	}
-
-	void move(int p, int q) {
-		x += p;
-		y += q;
-	}
-
-	int get_x() { return x; }
-	int get_y() { return y; }
-
-	void draw(char p) {
-		map[x][y] = p;
-		gotoXY(x, y); printf("%c", p);
-	}
-
-private:
-	int x;
-	int y;
-};
-
-struct walk {
-	short walk_count;
-	short x;
-	short y;
-	short back;
-};
-
-struct target { //ціль
-	short x;
-	short y;
-};
 
 vector<target> walk_queue;
 
@@ -100,7 +58,7 @@ void AddArray(int x, int y, int wc, int back) {
 	}
 }
 
-void FindPath(int sx, int sy, int x, int y) {  //пошук шляху
+void FindPath(int sx, int sy, int x, int y) {  //РїРѕС€СѓРє С€Р»СЏС…Сѓ
 	memcpy(tmp_map, map, sizeof(map));
 	BFSArray.clear();
 	walk tmp;
@@ -152,12 +110,12 @@ int main()
 
 
 	int score = 0;
-	cout << "||==       //\\\\       ====  ||\\\\    //||     //\\\\     ||\\\\    ||\n" << 
-		    "||   \\\\   //  \\\\    ||      || \\\\  // ||    //  \\\\    || \\\\   ||\n" << 
-		    "||   //  //====\\\\   ||      ||  \\\\//  ||   //====\\\\   ||  \\\\  ||\n" << 
-		    "||==    //      \\\\  ||      ||        ||  //      \\\\  ||   \\\\ ||\n" << 
-	    	"||     //        \\\\   ====  ||        || //        \\\\ ||    \\\\||\n\n";
-	cout << "\t\t  ..::GAME PACMAN::..\n\t\tPowered by Andrii Alforov\n";
+	cout << "      ||==       //\\\\       ====  ||\\\\    //||     //\\\\     ||\\\\    ||\n" << 
+		    "      ||   \\\\   //  \\\\    ||      || \\\\  // ||    //  \\\\    || \\\\   ||\n" << 
+		    "      ||   //  //====\\\\   ||      ||  \\\\//  ||   //====\\\\   ||  \\\\  ||\n" << 
+		    "      ||==    //      \\\\  ||      ||        ||  //      \\\\  ||   \\\\ ||\n" << 
+	    	"      ||     //        \\\\   ====  ||        || //        \\\\ ||    \\\\||\n\n";
+	cout << "\t\t\t   ..::GAME PACMAN::..\n\t\t\tPowered by Andrii Alforov\n";
 	cout << "Instruction:\n1. Arrow Keys to move your hero\n2. Eat the dots produced by the Eater to gain poins\n3. Don't get caught by the Eater\n\n";
 	cout << "H -> Hard\nN -> Normal\nE -> Easy\n\nInput : ";
 
@@ -188,7 +146,7 @@ int main()
 		old_x = x;
 		old_y = y;
 
-		if (GetAsyncKeyState(VK_UP)) {                 //зчитування стрілок
+		if (GetAsyncKeyState(VK_UP)) {                 //Р·С‡РёС‚СѓРІР°РЅРЅСЏ СЃС‚СЂС–Р»РѕРє
 			if (map[y - 1][x] == '.') { y--; score++; }
 			else
 				if (map[y - 1][x] == ' ') y--;
@@ -240,13 +198,7 @@ int main()
 	system("cls");
 	printf("You Lose and your score is : %i", score);
 	cin.get();
-	cin.get();
-	cin.get();
-	cin.get();
-	cin.get();
-	cin.get();
-	cin.get();
-	cin.get();
+	
 
 	return 0;
 }
