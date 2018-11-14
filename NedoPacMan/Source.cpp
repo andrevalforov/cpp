@@ -1,5 +1,6 @@
 #include "Headers.h"
 #include "variables.h"
+#include "structures_classes.cpp"
 
 using namespace std;
 char tmp_map[18][32];
